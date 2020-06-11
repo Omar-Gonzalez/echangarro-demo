@@ -1,0 +1,62 @@
+$grid_height: 450px;
+$dimension_mosaico: 160px;
+
+.detalle-wrapper{
+  margin-top: 40px;
+}
+
+.detalle {
+  .descripcion {
+    h1 {
+      font-family: $font_theme_primary;
+      font-weight: 700;
+    }
+
+    p {
+      font-family: $font_theme_third;
+      font-size: 18px;
+    }
+  }
+
+  .acciones {
+    padding: 20px;
+
+    p {
+      font-family: $font_theme_secondary;
+      font-size: 20px;
+    }
+
+    .descuento {
+      color: #B83A1B;
+      font-weight: bold;
+    }
+
+    button {
+      font-family: $font_theme_third;
+    }
+  }
+}
+
+.mosaicos {
+  min-height: $grid_height;
+
+  .grid {
+    overflow: scroll !important;
+
+    .mosaico {
+      width: $dimension_mosaico;
+      height: $dimension_mosaico;
+      border-style: solid;
+      border-width: 2px;
+      border-color: #E9ECEF;
+      margin: 3px;
+      background-size: 155px 155px;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

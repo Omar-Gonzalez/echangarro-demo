@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="jumbotron pag-info">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="info-titulo-marco">
+                    <p class="info-titulo">Terminos y condiciones de uso</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                {{ config.terminos_y_condiciones|linebreaks }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

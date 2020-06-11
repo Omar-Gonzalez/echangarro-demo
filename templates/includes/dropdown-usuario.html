@@ -1,0 +1,37 @@
+{% load static %}
+{% load thumbnail %}
+{% if request.user.is_authenticated %}
+    <div class="dropdown ml-2">
+        <button type="button" class="btn btn-secondary ml-2 dropdown-toggle u-email"
+                data-toggle="dropdown">
+            <i class="fas fa-user"></i>
+            <span class="d-none d-sm-none d-md-inline">{{ request.user.username }}</span>
+        </button>
+        <div class="dropdown-menu">
+            <a href="{% url 'perfil' %}">
+                {% thumbnail perfil.foto_de_perfil "60x60" crop="center" as img %}
+                    <img class="perfil-foto" src="{{ img.url }}" alt="foto perfil {{ request.user.username }}">
+                {% empty %}
+                    <img class="perfil-foto" src="{% static 'assets/user-icon.png' %}"
+                         alt="foto perfil {{ request.user.username }}">
+                {% endthumbnail %}
+            </a>
+            <div class="dropdown-divider"></div>
+            {% if request.user.is_superuser or request.user.is_staff %}
+                <a class="dropdown-item" href="/admin/"><i class="fas fa-unlock-alt"></i> Admin Panel</a>
+            {% endif %}
+            <a class="dropdown-item" href="{% url 'perfil' %}"><i class="fas fa-address-card"></i> Perfil</a>
+            <a class="dropdown-item" href="{% url 'carro' %}"><i class="fas fa-shopping-cart"></i> Carro de compra</a>
+            <a class="dropdown-item" href="{% url 'contacto' %}"><i class="fas fa-comments"></i> Contactanos</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'cierra-sesion' %}"><i class="fas fa-sign-out-alt"></i> Cierra Sesion</a>
+        </div>
+    </div>
+{% else %}
+    <a href="{% url 'entra' %}">
+        <button type="button" class="btn btn-secondary ml-2">
+            <i class="fas fa-user"></i>
+            &nbsp;<span class="d-none d-sm-none d-md-inline">Inicia sesión o regístrate</span>
+        </button>
+    </a>
+{% endif %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="jumbotron pag-info">
+        <div class="container">
+            {% include 'includes/messages.html' %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <div class="info-titulo-marco">
+                                    <p class="info-titulo">Ponte en contacto con nosotros</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {% if user.is_authenticated %}
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-comment-alt"></i> Enviaremos tu mensaje asociado con tu
+                                            cuenta de
+                                            usuario: <strong>{{ user.username }}</strong>
+                                        </div>
+                                        {% for field in form.visible_fields %}
+                                            {% if field.name == 'mensaje' %}
+                                                {{ field.label_tag }}
+                                                {{ field.errors }}
+                                                {{ field }}
+                                                {{ field.help_text }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ form.as_p }}
+                                    {% endif %}
+                                </div>
+                                <button style="width: 100%" class="btn btn-primary" type="submit" name="login-form"><i
+                                        class="fas fa-comment"></i> Envia tu mensaje
+                                </button>
+                            </form>
+                        </div>
+                        {% if config.mostrar_datos_de_contacto %}
+                            <hr>
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="alert alert-info">
+                                        {% if config.correo_contacto %}
+                                            <i class="fa fa-comment"></i> Alternativamente nos puedes enviar un correo
+                                            electronico a: <a
+                                                href="mailto:{{ config.correo_contacto }}"><i
+                                                class="fa fa-envelope"></i> {{ config.correo_contacto }}</a>
+                                            <hr>
+                                        {% endif %}
+                                        {% if config.telefono_contacto %}
+                                            <i class="fa fa-phone"></i> Tambien nos puedes marcar a nuestro
+                                            telefono:
+                                            <a href="tel:{{ config.telefono_contacto }}">{{ config.telefono_contacto }}</a>
+                                            <hr>
+                                        {% endif %}
+                                        {% if config.direccion_tienda %}
+                                            <i class="fa fa-map-marker-alt"></i> Nos puedes visitar en:
+                                            {{ config.direccion_tienda }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

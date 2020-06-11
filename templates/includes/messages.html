@@ -1,0 +1,40 @@
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <div class="alert alert-danger">
+                       <i class="fa fa-exclamation-triangle"></i> {{ message|safe }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if message.tags == 'warning' %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <div class="alert alert-warning">
+                       <i class="fa fa-info-circle"></i> {{ message }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if message.tags == 'info' %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <div class="alert alert-info">
+                        <i class="fa fa-comment-alt"></i> {{ message }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if message.tags == 'success' %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <div class="alert alert-success">
+                       <i class="fa fa-comment-alt"></i> {{ message }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,105 @@
+<br>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% if request.path == '/' %}
+                <li class="breadcrumb-item active"><i class="fas fa-boxes"></i> Inicio</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{% url 'tienda' %}"><i class="fas fa-boxes"></i> Inicio</a></li>
+            {% endif %}
+            {% if request.path == '/ofertas/' %}
+                <li class="breadcrumb-item active"><i class="fas fa-comment-dollar"></i> Ofertas</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{% url 'ofertas' %}"><i class="fas fa-comment-dollar"></i> Ofertas</a></li>
+            {% endif %}
+            {% if 'ENSAMBLADOS' in request.path %}
+                <li class="breadcrumb-item active"><i class="fas fa-fighter-jet"></i> Modelos Ensamblados</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{% url 'categoria' 'MODELOS ENSAMBLADOS' %}"><i class="fas fa-fighter-jet"></i> Modelos Ensamblados</a></li>
+            {% endif %}
+            {% if 'categoria' in request.path %}
+                <li class="breadcrumb-item active"><i class="fas fa-th-large"></i> Categorias</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{% url 'categorias' %}"><i class="fas fa-th-large"></i> Categorias</a></li>
+            {% endif %}
+            {% if 'marca' in request.path %}
+                <li class="breadcrumb-item active"><i class="fas fa-boxes"></i> Marcas</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{% url 'marcas' %}"><i class="fas fa-boxes"></i> Marcas</a></li>
+            {% endif %}
+            {% if 'escala' in request.path %}
+                <li class="breadcrumb-item active"><i class="fas fa-ruler-combined"></i> Por Escala</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{% url 'escalas' %}"><i class="fas fa-ruler-vertical"></i> Por Escala</a>
+            {% endif %}
+        </ol>
+    </nav>
+</div>
+
+{% if 'categoria' in request.path %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for categoria in categorias %}
+                    {% if categoria.nombre in request.path %}
+                        <li class="breadcrumb-item active">{{ categoria.nombre }}</li>
+                    {% else %}
+                        <li class="breadcrumb-item"><a
+                                href="{% url 'categoria' categoria.nombre %}">{{ categoria.nombre }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+    </div>
+{% endif %}
+
+{% if 'marca' in request.path %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for marca in marcas %}
+                    {% if marca.nombre in request.path %}
+                        <li class="breadcrumb-item active">{{ marca.nombre }}</li>
+                    {% else %}
+                        <li class="breadcrumb-item"><a
+                                href="{% url 'marca' marca.nombre %}">{{ marca.nombre }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+    </div>
+{% endif %}
+
+{% if 'escala' in request.path %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% if request.path == '/escala/1:350/' %}
+                    <li class="breadcrumb-item active">1:350</li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{% url 'escala' '1:350' %}">1:350</a></li>
+                {% endif %}
+                {% if request.path == '/escala/1:72/' %}
+                    <li class="breadcrumb-item active">1:72</li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{% url 'escala' '1:72' %}">1:72</a></li>
+                {% endif %}
+                {% if request.path == '/escala/1:48/' %}
+                    <li class="breadcrumb-item active">1:48</li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{% url 'escala' '1:48' %}">1:48</a></li>
+                {% endif %}
+                {% if request.path == '/escala/1:35/' %}
+                    <li class="breadcrumb-item active">1:35</li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{% url 'escala' '1:35' %}">1:35</a></li>
+                {% endif %}
+                {% if request.path == '/escala/1:24/' %}
+                    <li class="breadcrumb-item active">1:24</li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{% url 'escala' '1:24' %}">1:24</a></li>
+                {% endif %}
+            </ol>
+        </nav>
+    </div>
+{% endif %}

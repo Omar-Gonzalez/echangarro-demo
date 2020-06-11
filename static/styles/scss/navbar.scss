@@ -1,0 +1,149 @@
+$small_break_point: '768px';
+$font_size_small: 12px !important;
+
+.navigation-top {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  @media(max-width: 768px){
+    background-size: cover;
+    background-position: left top;
+  }
+
+  img.logo-brand{
+  }
+
+  img {
+    height: 220px;
+    @media(max-width: $small_break_point) {
+      height: 90px;
+    }
+  }
+
+  .tienda-nombre-marco {
+    background-color: $secondary;
+    border-radius: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 4px;
+    padding-top: 2px;
+    margin-top: 4px;
+
+    .tienda-nombre {
+      color: $color_titulo_tienda;
+      font-size: 30px;
+      margin-top: 5px;
+      font-family: $font_titulo_tienda;
+      font-weight: $font_weight_titulo_tienda;
+      @media (max-width: $small_break_point) {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.navbar {
+  .carro-dropdown {
+    min-width: 350px;
+
+    .btn {
+      width: 90%;
+      margin-left: 5%;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .perfil-foto {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .nav-divider {
+    font-family: $font_theme_secondary;
+    font-weight: bold;
+    color: whitesmoke;
+    margin-left: 8px;
+    @media(max-width: $small_break_point) {
+      display: none;
+    }
+  }
+  
+  .form-inline {
+    font-family: $font_theme_primary;
+    @media(max-width: $small_break_point) {
+      input {
+        width: 55% !important;
+      }
+      button {
+        width: 15% !important;
+        margin-left: 5px;
+        font-size: $font_size_small;
+      }
+    }
+  }
+
+  a {
+    font-family: $font_theme_primary;
+  }
+
+  button {
+    font-family: $font_theme_primary;
+  }
+
+  .form-control::-webkit-input-placeholder {
+    color: white;
+    font-family: $font_theme_primary;
+    @media(max-width: $small_break_point) {
+      text-align: center;
+      font-size: $font_size_small;
+    }
+  }
+
+
+  /* WebKit, Blink, Edge */
+  .form-control:-moz-placeholder {
+    color: white;
+    font-family: $font_theme_primary;
+    @media(max-width: $small_break_point) {
+      text-align: center;
+      font-size: $font_size_small;
+    }
+  }
+
+  /* Mozilla Firefox 4 to 18 */
+  .form-control::-moz-placeholder {
+    color: white;
+    font-family: $font_theme_primary;
+    @media(max-width: $small_break_point) {
+      text-align: center;
+      font-size: $font_size_small;
+    }
+  }
+
+  /* Mozilla Firefox 19+ */
+  .form-control:-ms-input-placeholder {
+    color: white;
+    font-family: $font_theme_primary;
+    @media(max-width: $small_break_point) {
+      text-align: center;
+      font-size: $font_size_small;
+    }
+  }
+
+  /* Internet Explorer 10-11 */
+  .form-control::-ms-input-placeholder {
+    color: white;
+    font-family: $font_theme_primary;
+    @media(max-width: $small_break_point) {
+      text-align: center;
+      font-size: $font_size_small;
+    }
+  }
+}

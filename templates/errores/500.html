@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="jumbotron error404">
+        <div class="container">
+            <div class="row justify-content-center">
+                <img src="{% static 'assets/404.png' %}" alt="404">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h1><span class="text-primary">500</span> Error Interno!</h1>
+                    <p>Ha ocurrido un error interno, se ha notificado al administrador del sitio. Por favor intenta de nuevo mas tarde!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,81 @@
+$color-primary: #007BFF;
+
+.perfil {
+  .card-header {
+    font-family: $font_theme_secondary;
+  }
+
+  .card-body {
+    font-family: $font_theme_primary;
+  }
+
+  buton {
+    font-family: $font_theme_fourth;
+    white-space: normal !important;
+    word-wrap: break-word;
+  }
+
+  a.btn {
+    white-space: normal !important;
+    word-wrap: break-word;
+  }
+
+  .btn {
+    font-family: $font_theme_primary;
+  }
+
+  .btn.accion-btn{
+    margin-top: 15px;
+  }
+
+  label {
+    font-family: $font_theme_secondary;
+  }
+
+  // margin-top: 40px;
+  // margin-bottom: 60px;
+
+  .ordenes {
+    .frame-1 {
+      padding: 3px;
+    }
+
+    .frame-2 {
+      padding: 3px;
+
+      img {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    .renglon-producto {
+      padding: 3px;
+      border-bottom: 1px solid $color-primary;
+    }
+  }
+
+  .direcciones {
+    .direccion {
+      padding: 3px;
+      border-top: 1px solid white;
+    }
+  }
+
+  .telefonos {
+    .telefono {
+      padding: 3px;
+    }
+  }
+
+  .producto-deseado {
+    .hearth-img {
+      margin-top: 26px;
+    }
+
+    .prod-img {
+      height: 70px;
+      margin-top: 10px;
+    }
+  }
+}

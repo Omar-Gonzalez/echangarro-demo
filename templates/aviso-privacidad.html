@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="jumbotron pag-info">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="info-titulo-marco">
+                    <p class="info-titulo">Aviso de privacidad</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                {{ config.aviso_privacidad|linebreaks }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

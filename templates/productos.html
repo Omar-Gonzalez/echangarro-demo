@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+    {% include 'includes/pago-banner.html' %}
+    {% include 'includes/breadcrumb.html' %}
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-12 col-sm-8 redes-sociales">
+                Siguenos en redes sociales: 
+                <a href="https://www.facebook.com/LaBodegaDelHobby/"><i class="fab fa-facebook-square"></i> Facebook</a> e 
+                <a href="https://www.instagram.com/tanquemania/"><i class="fab fa-instagram"></i> Instagram</a>    
+            </div>
+            {% include 'includes/paginacion.html' %}      
+        </div>  
+    </div>
+    {% include 'includes/messages.html' %}
+    {% include 'includes/producto-no-encontrado.html' %}
+    {% if inventarioDisponible %}
+        <div class="container tienda">
+            <div class="row">
+                {% for producto in productos %}
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 producto border border-white rounded">
+                        <div class="frame rounded"></div>
+                        <div class="card">
+                            <a href="{% url 'producto' producto.nombre %}">
+                                {% thumbnail producto.imagen_principal "200" crop="center" as img %}
+                                    <img class="card-img-top" src="{{ img.url }}"
+                                         alt="{{ producto.nombre }}">
+                                {% empty %}
+                                    <img class="card-img-top" src="{% static 'assets/box_placeholder.png' %}"
+                                         alt="{{ producto.nombre }}">
+                                {% endthumbnail %}
+                            </a>
+                        </div>
+                        <form action="{% url 'agrega-producto' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="{{ agregaForm.pk_producto.html_name }}"
+                                   id="{{ agregaForm.pk_producto.id_for_label }}" value="{{ producto.pk }}">
+                            <input type="hidden" name="{{ agregaForm.cantidad.html_name }}"
+                                   id="{{ agregaForm.cantidad.id_for_label }}" value="1">
+                            <button type="submit" class="btn btn-primary agrega-btn">
+                                <i class="fas fa-cart-plus"></i>
+                                &nbsp; Agregar al Carrito
+                            </button>
+                        </form>
+                        <div class="text-center titulo-prod">
+                            <a href="{% url 'producto' producto.nombre %}">
+                                <p class="card-title text-primary">
+                                    {{ producto.nombre }} 
+                                    {% if producto.escala is not None %}
+                                        {{ producto.escala }}
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </div>
+                        <div class="precio">
+                            {% if producto.tiene_descuento %}
+                                <p><strike>Precio lista: ${{ producto.precio_lista }}</strike></p>
+                                <div class="descuento">
+                                    <p>Precio: ${{ producto.precio }}</p>
+                                    <p>Ahorras: ${{ producto.ahorro_cantidad }} ({{ producto.ahorro_porcentaje }}%)</p>
+                                </div>
+                            {% else %}
+                                <p><strong>Precio lista: ${{ producto.precio_lista }}</strong></p>
+                            {% endif %}
+                        </div>
+                        <hr>
+                        <div class="producto-leyenda">
+                            <p>En <a href="{% url 'categoria' producto.categoria %}">{{ producto.categoria }}</a>, marca
+                                de
+                                fabricante: <a href="{% url 'marca' producto.marca %}">{{ producto.marca }}</a></p>
+                            <blockquote class="blockquote">
+                                <footer class="blockquote-footer">({{ producto.stock }}) <cite
+                                        title="Source Title"><i class="fas fa-box"></i> Disponibles</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="row justify-content-end">
+                {% include 'includes/paginacion.html' %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

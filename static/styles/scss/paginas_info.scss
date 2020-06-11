@@ -1,0 +1,22 @@
+.pag-info {
+  .info-titulo-marco {
+    background-color: $secondary;
+    border-radius: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    margin-top: 4px;
+
+    .info-titulo {
+      color: $color_titulo_tienda;
+      font-size: 30px;
+      margin-top: 5px;
+      font-family: $font_titulo_tienda;
+      font-weight: $font_weight_titulo_tienda;
+      @media (max-width: $small_break_point) {
+        font-size: 20px;
+      }
+    }
+  }
+}

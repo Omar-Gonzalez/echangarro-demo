@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="prepara-orden">
+        <div class="container perfil">
+            {% include 'includes/messages.html' %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 ordenes">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-user"></i> <strong>{{ request.user.username }}</strong>, confirma orden
+                            <strong>numero {{ orden.numero }}</strong>:
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8 frame-1 bg-light">Productos en tu orden:</div>
+                                <div class="col-4 frame-2 bg-light"><strong><i
+                                        class="fa fa-box-open"></i> {{ orden.estado }}</strong></div>
+                            </div>
+                            {% for producto in orden.productos %}
+                                <div class="row">
+                                    <div class="col-8 border-top">
+                                        <strong>({{ producto.cantidad }})</strong>{{ producto.producto.nombre }} -
+                                        precio unitario:
+                                        ${{ producto.producto.precio }}</div>
+                                    <div class="col-4 renglon-sub-total border-top bg-light">
+                                        <strong>${{ producto.sub_total }}</strong>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-12 frame-1 bg-light border-top"><i class="fa fa-truck"></i> Costos de envio :</div>
+                            </div>
+                            {% for producto in orden.productos %}
+                                {% if producto.producto.categoria_envio %}
+                                    <div class="row">
+                                        <div class="col-8 border-top">
+                                            <small>{{ producto.producto.categoria_envio.descripcion }}</small>
+                                        </div>
+                                        <div class="col-4 renglon-sub-total border-top bg-light">
+                                            ${{ producto.producto.categoria_envio.costo_envio_nacional }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-4 offset-4 text-dark text-right"><strong>Total:</strong></div>
+                                <div class="col-4 bg-dark text-white"><strong>${{ orden.total_con_envio }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-truck"></i> Datos de contacto para envio de orden:
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <i class="fa fa-user"></i> <strong>Nombre de contacto:</strong>
+                                    {% if perfil.nombre %}{{ perfil.nombre }}{% endif %}
+                                    {% if perfil.apeidos %}{{ perfil.apeidos }}{% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8"><i class="fa fa-phone"></i> <strong>Telefono de
+                                    contacto </strong>{{ perfil.telefono }}</div>
+                                {% if perfil.telefono_alternativo %}
+                                    <div class="col-8"><strong>Telefono
+                                        alternativo </strong>{{ perfil.telefono_alternativo }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-money-check-alt"></i> Selecciona tu metodo de pago preferido:
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <img height="120px" src="https://tanquemania.s3-us-west-2.amazonaws.com/vendor-icons/mercadopago-01.png">
+                                </div>  
+                                <div class="col-4 text-center">
+                                    <img height="110px" src="https://tanquemania.s3-us-west-2.amazonaws.com/vendor-icons/paypal_1215259.png">
+                                </div>  
+                                <div class="col-4 text-center">
+                                    <img height="90px" src="https://tanquemania.s3-us-west-2.amazonaws.com/vendor-icons/credit-card.png">
+                                </div>  
+                            </div>
+                            <div class="row justify-content-center">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        {{ form.as_table }}
+                                    </div>
+                                    {% if ordenesDisponibles %}
+                                        <button class="btn btn-primary w-100" type="submit"><i
+                                                class="fa fa-check-circle"></i> Confirma Orden
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

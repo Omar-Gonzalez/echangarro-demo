@@ -1,0 +1,20 @@
+
+.prepara-orden{
+  margin-top: 40px;
+  margin-bottom: 60px;
+  .card-header{
+    font-family: $font_theme_secondary;
+  }
+  .card-body{
+    font-family: $font_theme_primary;
+  }
+  button{
+    font-family: $font_theme_secondary;
+  }
+  .btn{
+    font-family: $font_theme_secondary;
+  }
+  label{
+    font-family: $font_theme_secondary;
+  }
+}

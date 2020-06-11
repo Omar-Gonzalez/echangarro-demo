@@ -1,0 +1,36 @@
+.carro {
+
+  margin-top: 40px;
+  margin-bottom: 120px;
+  font-family: $font_theme_secondary;
+  @media(max-width: 768px) {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+
+  p {
+    padding-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .carro-tabla {
+
+    .total {
+      padding: 7px;
+    }
+
+    @media screen and (max-width: 768px) {
+      button {
+        padding: 0px;
+        margin-top: 15px;
+        font-size: 12px;
+      }
+      .input-numerico {
+        min-width: 45px;
+      }
+      .cont-elimina {
+        padding-left: 7px;
+      }
+    }
+  }
+}

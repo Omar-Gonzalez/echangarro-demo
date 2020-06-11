@@ -1,0 +1,8 @@
+{% load static %}
+
+{% for imagen in prod.imagenes %}
+    {% if imagen.pk == img_pk %}
+        <img height="470px" src="{{ imagen.imagen.url }}">
+    {% endif %}
+{% endfor %}
+

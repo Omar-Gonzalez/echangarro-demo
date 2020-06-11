@@ -1,0 +1,28 @@
+
+.autenticacion {
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  label {
+    font-family: $font_theme_secondary;
+    font-size: 18px;
+  }
+
+  p {
+    font-family: $font_theme_third;
+    font-size: 18px;
+  }
+
+  button {
+    width: 100%;
+    font-family: $font_theme_fourth;
+    font-size: 20px;
+  }
+
+  .alert {
+    a {
+      white-space: normal !important;
+      word-wrap: break-word;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{% load static %}
+<div class="divisor bg-primary"></div>
+<div class="pie">
+    <div class="container">
+        <div class="row">
+            <div class="col-2 d-none d-sm-block justify-content-end text-right">
+                <img height="80px" src="https://tanquemania.s3-us-west-2.amazonaws.com/assets/tanquemania-logo-site.png" alt="TANQUEMANIA">
+            </div>
+            <div class="col-10 text-dark">
+                <a href="/"><i class="fa fa-box-open"></i> LA BODEGA DEL HOBBY</a> |
+                {% if config.nombre_tienda|length > 0 %}
+                    {{ config.nombre_tienda }}
+                {% else %}
+                    Tienda muestra
+                {% endif %}
+                | <a href="{% url 'contacto' %}"><i class="fa fa-comments"></i> Contactanos</a>
+                <br>
+                <a class="text-primary" href="{% url 'privacidad' %}"><i class="fa fa-user-secret"></i> Aviso de Privacidad </a> | <a class="text-primary" href="{% url 'terminos' %}"><i class="fa fa-balance-scale"></i> Terminos y condiciones de
+                uso</a> <br>
+                <i class="fas fa-copyright"></i> Derechos Reservados {% now "Y" %} | Desarrollo de sistema web por <i class="fa fa-cat"></i> <a
+                    href="https://omar-gonzalez.github.io/omargonzalez.me/"> Omar González </a>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>

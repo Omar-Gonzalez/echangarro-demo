@@ -1,0 +1,21 @@
+.pago-banner{
+	font-family: $font-theme-secondary;
+	img.pago-icon{
+		height: 30px;
+	}
+	img.ws-icon{
+		height: 80px
+	}
+	@media(max-width: 768px){
+		img.pago-icon{
+			height: 30px;
+		}
+		img.ws-icon{
+			height: 35px
+		}
+		h4{
+			font-size: 17px;
+		}
+		text-align: center;
+	}
+}

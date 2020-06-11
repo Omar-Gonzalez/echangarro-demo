@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="prepara-orden">
+        {% if perfil.tiene_info_contacto %}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-truck"></i> Datos de contacto para envio de orden:
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <strong>Nombre de contacto:</strong>
+                                        {% if perfil.nombre %}{{ perfil.nombre }}{% endif %}
+                                        {% if perfil.apeidos %}{{ perfil.apeidos }}{% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8"><strong>Telefono de contacto </strong>{{ perfil.telefono }}</div>
+                                    {% if perfil.telefono_alternativo %}
+                                        <div class="col-8"><strong>Telefono
+                                            alternativo </strong>{{ perfil.telefono_alternativo }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        <div class="container prepara-orden">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {% include 'includes/messages.html' %}
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.as_table }}
+                        </div>
+                        <button style="width: 100%" class="btn btn-primary" type="submit"><i
+                                class="fas fa-check-circle"></i> Confirma datos de envio
+                        </button>
+                    </form>
+                </div>
+                {% if agrega %}
+                    <div class="col-md-2">
+                        <br>
+                        <a style="margin-top: 10px;" class="btn btn-success" role="button" href="{% url 'direccion' %}"><i
+                                class="fas fa-plus-circle"></i> Agrega
+                            nueva direccion</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

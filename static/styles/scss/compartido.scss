@@ -1,0 +1,46 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wrapper{
+  background-color: white;
+}
+
+.alert {
+  font-family: $font_theme_secondary;
+  margin: 15px;
+}
+
+.breadcrumb {
+  a {
+    font-family: $font_theme_primary;
+    font-weight: bold;
+  }
+;
+
+  li {
+    font-family: $font_theme_third;
+  }
+}
+
+.producto-no-encontrado {
+  p {
+    margin-top: 30px;
+    font-size: 20px;
+    font-family: $font_theme_secondary;
+  }
+}
+
+.error404 {
+  p {
+    margin-top: 30px;
+    font-size: 20px;
+    font-family: $font_theme_secondary;
+  }
+}
+
+.jumbotron {
+  margin-bottom: 0px !important;
+}
+

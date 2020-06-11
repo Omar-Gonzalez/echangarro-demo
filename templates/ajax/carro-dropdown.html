@@ -1,0 +1,23 @@
+{% if request.user.is_authenticated %}
+    {% if carro.num_de_productos <= 0 %}
+        <div class="alert alert-info">
+            Aun no tienes ningun producto en tu carro, intenta agregar algun producto de tu preferencia
+        </div>
+    {% else %}
+        <a class="dropdown-item" href="{% url 'carro' %}"><i class="fas fa-edit"></i> Realiza cambios:</a>
+        <div class="dropdown-divider"></div>
+        {% for producto in carro.productos %}
+            <a class="dropdown-item" href="{% url 'carro' %}"><i class="fas fa-check-square"></i> {{ producto }} ({{ producto.cantidad }}):
+                ${{ producto.sub_total }}</a>
+        {% endfor %}
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'carro' %}"><i class="fas fa-chevron-circle-right"></i> <b>Sub total ${{ carro.total }}</b></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'prepara-orden' %}"><a href="{% url 'prepara-orden' %}"
+                                                                     class="btn btn-primary">Procede al pago &raquo;</a></a>
+    {% endif %}
+{% else %}
+    <div class="alert alert-info">
+        <a href="{% url 'entra' %}">Inicia sesión o registrate para agregar productos a tu carrito &raquo;</a>
+    </div>
+{% endif %}

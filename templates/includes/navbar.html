@@ -1,0 +1,78 @@
+{% load static %}
+{% load thumbnail %}
+{#FIXED NAVBAR#}
+<nav class="navbar navbar-light bg-light navigation-top" style="background-image: url({% thumbnail config.banner_tienda "x1200" as img %}{{ img.url }}{% empty %}{% static 'assets/bg-generic-1200.jpg' %}{% endthumbnail %})">
+    <div class="container">
+        <div class="row m-2">
+            <div class="col-12">
+                <a href="/">
+                    <img src="https://tanquemania.s3-us-west-2.amazonaws.com/assets/tanquemania-logo-640x480.png" alt="TANQUEMANIA, LA BODEGA DEL HOBBY">
+                </a>  
+            </div>
+        </div>
+    </div>
+</nav>
+{#STICKY NAVBAR#}
+<nav class="navbar sticky-top navigation-sticky navbar-dark bg-secondary">
+    <div class="container justify-content-center">
+        {#        FORMA DE BUSQUEDA#}
+        <div class="form-inline my-1 my-lg-0 rounded">
+            <div class="d-block d-sm-block d-md-none">
+                {% include 'includes/dropdown-usuario.html' %}
+            </div>
+            <input id="busqueda" class="form-control mr-sm-2 bg-secondary btn-outline-light text-white" type="search"
+                   placeholder="¿Que estas buscando?"
+                   aria-label="Busca">
+            <button onclick="tienda.busca()" class="btn btn-secondary btn-outline-light " type="submit"><i
+                    class="fas fa-search"></i>&nbsp;<span class="d-none d-sm-none d-md-inline">Busca</span>
+            </button>
+        </div>
+        {#        DROPDOWN DE MARCAS#}
+        <div class="dropdown ml-2 d-none d-sm-none d-md-block">
+            <button type="button" class="btn btn-secondary  dropdown-toggle u-email" data-toggle="dropdown">
+                <i class="fas fa-boxes"></i> Marcas
+            </button>
+            <div class="dropdown-menu multi-row-dropdown">
+                <div class="row">
+                    {% for marca in marcas %}
+                        <div class="col-12">
+                            <a class="dropdown-item" href="{% url 'marca' marca.nombre %}">{{ marca.nombre }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <span class="nav-divider">|</span>
+        {#        DROPDOWN DE CATEGORIAS#}
+        <div class="dropdown ml-2 d-none d-sm-none d-md-block">
+            <button type="button" class="btn btn-secondary dropdown-toggle u-email" data-toggle="dropdown">
+                <i class="fas fa-th-large"></i> Categorias
+            </button>
+            <div class="dropdown-menu multi-row-dropdown">
+                <div class="row">
+                    {% for categoria in categorias %}
+                        <div class="col-12">
+                            <a class="dropdown-item"
+                               href="{% url 'categoria' categoria.nombre %}">{{ categoria.nombre }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <span class="nav-divider">|</span>
+        {#        DROPDOWN DE CARRITO #}
+        <div class="dropdown ml-2 d-none d-sm-none d-md-block">
+            <button onclick="carro.actualiza('{% url 'ajax-carrito' %}')" type="button"
+                    class="btn btn-secondary dropdown-toggle u-email"
+                    data-toggle="dropdown">
+                <i class="fas fa-shopping-cart"></i>&nbsp;Carrito
+            </button>
+            <div id="carrito-ajax" class="dropdown-menu carro-dropdown"></div>
+        </div>
+        <span class="nav-divider">|</span>
+        <div class="d-none d-sm-none d-md-block">
+            {% include 'includes/dropdown-usuario.html' %}
+        </div>
+    </div>
+</nav>
+

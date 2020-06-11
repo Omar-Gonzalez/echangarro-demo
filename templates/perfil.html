@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+    <div class="container perfil">
+        {% include 'includes/messages.html' %}
+        {% if perfilDisponible %}
+        <div class="row mt-4 justify-content-end">
+            <div class="col-12 col-sm-2 text-center">
+                <div class="card" style="width: 100%;">
+                    {% thumbnail perfil.foto_de_perfil "150x150" crop="center" as img %}
+                        <img class="card-img-top"src="{{ img.url }}"alt="logo tienda">
+                    {% empty %}
+                        <img class="card-img-top" src="{% static 'assets/user-icon.png' %}"
+                                             alt="foto perfil {{ request.user.username }}">
+                                    {% endthumbnail %}
+                </div>
+                {% if perfil.foto_de_perfil %}
+                    <a href="{% url 'cambia-foto-perfil' %}">Cambia tu foto de perfil</a>
+                {% else %}
+                    <a href="{% url 'cambia-foto-perfil' %}">Agrega una foto de perfil</a>
+                {% endif %}
+            </div>
+
+            <div class="col-12 col-sm-10 ordenes">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-address-card"></i> Bienvenido <strong>{{ request.user.username }}</strong>, tu
+                        historial de ordenes:
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-10">
+                                {% if ordenes|length <= 0 %}
+                                    <div class="alert alert-info">
+                                        <p><i class="fa fa-comment-alt"></i> No tienes ninguna orden en registro, visita nuestro
+                                            catalogo de productos para
+                                            comprar:</p>
+                                        <button class="btn btn-primary"><i class="fas fa-store"></i> Tienda &raquo;</button>
+                                    </div>
+                                {% else %}
+                                    Tienes <strong> {{ ordenes|length }} ordenes</strong> en tu cuenta
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% for orden in ordenes %}
+            <div class="col-12 col-sm-10 ordenes">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8 frame-1 bg-light"><i class="fas fa-box-open text-secondary"></i> Orden
+                                <strong>{{ orden.numero }}</strong>
+                                    Creada: {{ orden.creado }}</div>
+                            <div class="col-4 frame-2 bg-light">
+                                <strong>{{ orden.estado }} 
+                                        {% if orden.estado == 'PAGADO' %}
+                                            <i class="fas fa-check-circle text-primary"></i>
+                                        {% endif %}
+                                        {% if orden.estado == 'ENVIADO' %}
+                                            <i class="fas fa-truck text-primary"></i>
+                                        {% endif %}
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                            {% if orden.estado == 'PENDIENTE PAGO'%}
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="alert alert-success">
+                                        <strong><i class="fas fa-info-circle"></i> Hemos registrado tu orden </strong> muy pronto estaremos en contacto contigo via correo para hacerte llegar la orden pago por medio de tu metodo seleccionado: <strong>{{ orden.preferencia_de_pago }}</strong>
+                                    </div>
+                                </div> 
+                            </div>
+                            {% endif %}
+                            {% if orden.estado == 'ENVIADO' %}
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="alert alert-success">
+                                       <strong><i class="fas fa-truck"></i> Guia de envio:</strong> {{ orden.guia_de_envio }}
+                                    </div>
+                                </div> 
+                            </div>                                
+                            {% endif %}
+                            {% for producto in orden.productos %}
+                                <div class="row">
+                                    <div class="col-8 border-top">
+                                        <strong>({{ producto.cantidad }}) </strong>{{ producto.producto.nombre }} -
+                                        precio unitario:
+                                        ${{ producto.producto.precio }}</div>
+                                    <div class="col-4 renglon-sub-total bg-light border-top">
+                                        <strong>${{ producto.sub_total }}</strong>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-4 offset-4 text-dark text-right"><strong>Total:</strong></div>
+                                <div class="col-4 bg-dark text-white"><strong>${{ orden.total }}</strong>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}    
+
+
+
+        </div>
+        <br>
+        <div class="row justify-content-end producto-deseado">
+            <div class="col-12 col-sm-10">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-heart"></i> Tus productos deseados:
+                    </div>
+                    <div class="card-body">
+                        {% if productos_deseados|length <= 0 %}
+                            <div class="alert alert-info">
+                                <p><i class="fa fa-comment-alt"></i> No tienes ningun producto deseado visita nuestra
+                                    tienda para explorar nuestros
+                                    productos</p>
+                                <button class="btn btn-primary"><i class="fas fa-store"></i> Tienda &raquo;</button>
+                            </div>
+                        {% endif %}
+                        {% for producto_deseado in productos_deseados %}
+                            <div class="row border-top">
+                                <div class="col-1 bg-warning text-center justify-content-center border-top border-white rounded">
+                                    <img class="hearth-img"
+                                         src="{% static 'assets/move_to_wishlist_white_25.png' %}"
+                                         alt="producto deseado">
+                                </div>
+                                <div class="col-2 text-center justify-content-center">
+                                    {% thumbnail producto_deseado.producto.imagen_principal "120x120" crop="center" as img %}
+                                        <img class="card-img-top" src="{{ img.url }}"
+                                             alt="{{ producto.nombre }}">
+                                    {% empty %}
+                                        <img class="card-img-top" src="{% static 'assets/box_placeholder.png' %}"
+                                             alt="{{ producto.nombre }}">
+                                    {% endthumbnail %}
+                                </div>
+                                <div class="col-6 bg-light border-top border-white">
+                                    <p class="pt-2">
+                                        <a href="{% url 'producto' producto_deseado.producto.nombre %}">{{ producto_deseado.producto.nombre }}</a>:
+                                        <strong> ${{ producto_deseado.producto.precio }}</strong></p>
+                                    <p>
+                                        <span class="text-info small"><em>{{ producto_deseado.producto.descripcion }}</em></span>
+                                    </p>
+                                </div>
+                                <div class="col-3">
+                                    <form action="{% url 'agrega-producto' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="{{ agregaForm.pk_producto.html_name }}"
+                                               id="{{ agregaForm.pk_producto.id_for_label }}"
+                                               value="{{ producto_deseado.producto.pk }}">
+                                        <input type="hidden" name="{{ agregaForm.cantidad.html_name }}"
+                                               id="{{ agregaForm.cantidad.id_for_label }}" value="1">
+                                        <button type="submit" class="btn btn-primary accion-btn"><i
+                                                class="fas fa-cart-plus"></i> Agrega al Carrito
+                                        </button>
+                                    </form>
+                                    <form action="{% url 'remueve-deseado' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="{{ remueveForm.pk_producto.html_name }}"
+                                               id="{{ remueveForm.pk_producto.id_for_label }}"
+                                               value="{{ producto_deseado.producto.pk }}">
+                                        <button type="submit" class="btn btn-warning accion-btn"><i
+                                                class="fas fa-minus-circle"></i> Remueve deseado
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row direcciones">
+            <div class="col-12 col-sm-10 offset-sm-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-truck"></i> Tus datos de envio:
+                    </div>
+                    <div class="card-body">
+                        {% if not perfil.completo %}
+                            <div class="row">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-comment-alt"></i> Por favor completa tu perfil <strong>(nombre de
+                                    contacto, direccion y
+                                    telefono)</strong> para poder
+                                    realizar ordenes:
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-8">
+                                <i class="fas fa-address-card"></i> <strong>Nombre de contacto:</strong>
+                                {% if perfil.nombre %}{{ perfil.nombre }}{% endif %}
+                                {% if perfil.apeidos %}{{ perfil.apeidos }}{% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8"><i class="fas fa-phone"></i> <strong>Telefono de
+                                contacto </strong>{{ perfil.telefono }}</div>
+                            {% if perfil.telefono_alternativo %}
+                                <div class="col-8"><i class="fas fa-phone"></i> <strong>Telefono
+                                    alternativo </strong>{{ perfil.telefono_alternativo }}</div>
+                            {% endif %}
+                            <div class="col-4">
+                                <a href="{% url 'perfil-edita' perfil.pk %}" role="button" class="btn btn-success"><i
+                                        class="fas fa-edit"></i> Modifica
+                                    datos de contacto</a>&nbsp;
+                                <br>
+                                <br>
+                                <a href="{% url 'cambia-pwd' %}" role="button" class="btn btn-warning"><i
+                                        class="fas fa-lock"></i> Cambia tu password</a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4 offset-8">
+                                <a href="{% url 'direccion' %}" class="btn btn-success" role="button"><i
+                                        class="fas fa-plus-circle"></i> Agrega Nueva
+                                    Direcion</a>
+                            </div>
+                        </div>
+                        <br>
+                        {% for direccion in direcciones %}
+                            <div class="row direccion">
+                                <div class="col-8 bg-light">
+                                    <i class="fas fa-map-marker-alt"></i> {{ direccion }}
+                                </div>
+                                <div class="col-4 bg-light">
+                                    <a href="{% url 'direccion-edita' direccion.pk %}" class="btn btn-success"
+                                       role="button"><i class="fas fa-edit"></i> Modifica</a>&nbsp;
+                                    <a href="{% url 'direccion-borra' direccion.pk %}" class="btn btn-danger"
+                                       role="button"><i class="fas fa-minus-circle"></i> Elimina</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container carro">
+        <div class="row bg-light justify-content-center">
+            <div class="col-4 col-sm-4 col-md-4">
+                <p><i class="fa fa-box-open"></i> Producto</p>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3">
+                <p><i class="fa fa-list-ol"></i> Cantidad</p>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3">
+                <p><i class="fa fa-check-circle"></i> Acciones</p>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+                <p><i class="fa fa-money-bill-wave"></i> Sub total:</p>
+            </div>
+        </div>
+        {% for carro_prod in carro.productos %}
+            <div class="carro-tabla">
+                <div class="row justify-content-center border-top p-1">
+                    <div class="col-4 col-sm-4 col-md-4 bg-light">
+                        <p>{{ carro_prod.producto.nombre }}</p>
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4 text-white">
+                        <form action="{% url 'actualiza-producto' %}" method="post">
+                            <div class="row justify-content-center">
+                                {% csrf_token %}
+                                <div class="col-5">
+                                    <input type="hidden" name="{{ prodForm.pk_producto.html_name }}"
+                                           id="{{ prodForm.pk_producto.id_for_label }}"
+                                           value="{{ carro_prod.producto.pk }}">
+                                    <input class="form-control input-numerico" type="number"
+                                           name="{{ prodForm.cantidad.html_name }}"
+                                           id="{{ prodForm.cantidad.id_for_label }}" value="{{ carro_prod.cantidad }}"
+                                           min="1" max="{{ carro_prod.producto.stock }}">
+                                </div>
+                                <div class="col-7">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Actualiza</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2 cont-elimina">
+                        <form action="{% url 'borra-producto' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ carro_prod.pk }}"
+                                   name="{{ borraForm.pk_producto.html_name }}"
+                                   id="{{ borraForm.pk_producto.id_for_label }}">
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-minus-circle"></i> Elimina</button>
+                        </form>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2">
+                        <strong><p>${{ carro_prod.sub_total }}</p></strong>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row carro-tabla">
+            <div class="col-2 offset-8 bg-light total">Total orden:</div>
+            <div class="col-2 bg-light total"><strong>${{ carro.total }}</strong></div>
+        </div>
+        {% if carro.num_de_productos > 0 %}
+            <hr>
+            <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-12 col-sm-8 col-md-4">
+                        <a style="width: 100%" class="btn btn-secondary" role="button" href="{% url 'prepara-orden' %}"><i class="fa fa-sign-in-alt"></i>  Proceder
+                            al pago</a>
+                        <a style="width: 100%" class="btn btn-primary mt-4" role="button" href="/"><i class="fas fa-box-open"></i> Sigue Comprando</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

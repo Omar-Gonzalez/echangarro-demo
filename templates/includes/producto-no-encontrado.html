@@ -1,0 +1,15 @@
+{% load static %}
+{% if productos|length < 1 and inventarioDisponible %}
+    <div class="jumbotron">
+        <div class="container producto-no-encontrado">
+            <div class="row justify-content-center">
+                <img height="140px" src="{% static 'assets/box_placeholder.png' %}" alt="">
+            </div>
+            <div class="row">
+                <div class="col-12 text-center ">
+                    <p>Lo sentimos no econtramos ningun producto relacionado con tu busqueda</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
